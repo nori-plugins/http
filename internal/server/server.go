@@ -1,9 +1,14 @@
 package server
 
-import "github.com/go-chi/chi/v4"
+import (
+	"net/http"
+
+	"github.com/go-chi/chi/v4"
+)
 
 type Server struct {
-	server chi.Router
+	router chi.Router
+	server *http.Server
 }
 
 // todo: implement start and graceful shutdown methods
