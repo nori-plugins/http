@@ -69,5 +69,5 @@ func (p plugin) Start(ctx context.Context, registry registry.Registry) error {
 }
 
 func (p plugin) Stop(ctx context.Context, registry registry.Registry) error {
-	return p.server.Shutdown()
+	return p.server.Shutdown(ctx)
 }
