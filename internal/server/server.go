@@ -17,6 +17,7 @@ type Server struct {
 
 func (s *Server) Start(port string) error {
 	s.server.Addr = port
+	s.server.Handler = s.router
 	return s.server.ListenAndServe()
 }
 
