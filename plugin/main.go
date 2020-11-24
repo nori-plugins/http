@@ -24,7 +24,7 @@ type plugin struct {
 }
 
 type conf struct {
-	port config.UInt
+	port config.String
 }
 
 func (p plugin) Meta() meta.Meta {
@@ -54,10 +54,10 @@ func (p plugin) Instance() interface{} {
 
 func (p plugin) Init(ctx context.Context, config config.Config, log logger.FieldLogger) error {
 	p.config = conf{
-		port: config.UInt("port", "http server port"),
+		port: config.String("port", "http server port"),
 	}
 
-	p.server = server.New()
+	p.server = server.New(p.config.port())
 	// todo: take port from config
 	// todo: integrate EventEmitter interface
 
@@ -65,7 +65,7 @@ func (p plugin) Init(ctx context.Context, config config.Config, log logger.Field
 }
 
 func (p plugin) Start(ctx context.Context, registry registry.Registry) error {
-	return p.server.Start(p.config.port())
+	return p.server.Start()
 }
 
 func (p plugin) Stop(ctx context.Context, registry registry.Registry) error {
