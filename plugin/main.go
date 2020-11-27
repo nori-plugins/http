@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 
+	"github.com/nori-io/common/v3/pkg/domain/event"
+
 	"github.com/nori-io/common/v3/pkg/domain/config"
 	em "github.com/nori-io/common/v3/pkg/domain/enum/meta"
 	"github.com/nori-io/common/v3/pkg/domain/logger"
@@ -65,9 +67,28 @@ func (p plugin) Init(ctx context.Context, config config.Config, log logger.Field
 }
 
 func (p plugin) Start(ctx context.Context, registry registry.Registry) error {
-	return p.server.Start()
+	return nil
+	//return p.server.Start()
 }
 
 func (p plugin) Stop(ctx context.Context, registry registry.Registry) error {
-	return p.server.Shutdown(ctx)
+	return nil
+	//return p.server.Shutdown(ctx)
+}
+
+func (p plugin) Subscribe(emitter event.EventEmitter) {
+	ch1, _ := emitter.On("/nori/plugins/started")
+	ch2, _ := emitter.On("/nori/plugins/stopped")
+
+	go func() {
+		for {
+			select {
+			case <-ch1:
+				p.server.Start()
+			case <-ch2:
+				p.server.Shutdown(context.Background())
+			}
+		}
+	}()
+
 }
