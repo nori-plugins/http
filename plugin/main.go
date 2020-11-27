@@ -60,20 +60,16 @@ func (p plugin) Init(ctx context.Context, config config.Config, log logger.Field
 	}
 
 	p.server = server.New(p.config.port())
-	// todo: take port from config
-	// todo: integrate EventEmitter interface
 
 	return nil
 }
 
 func (p plugin) Start(ctx context.Context, registry registry.Registry) error {
 	return nil
-	//return p.server.Start()
 }
 
 func (p plugin) Stop(ctx context.Context, registry registry.Registry) error {
 	return nil
-	//return p.server.Shutdown(ctx)
 }
 
 func (p plugin) Subscribe(emitter event.EventEmitter) {

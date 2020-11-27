@@ -12,9 +12,6 @@ type Server struct {
 	server *http.Server
 }
 
-// todo: implement start and graceful shutdown methods
-// todo: implement wrapper around go-chi methods. map http interface to go-chi router interface
-
 func (s *Server) Start() error {
 	s.server.Handler = s.router
 	return s.server.ListenAndServe()
