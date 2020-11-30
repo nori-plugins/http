@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/go-chi/chi/v4"
+	"github.com/go-chi/chi"
 )
 
 type Server struct {
