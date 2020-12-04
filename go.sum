@@ -1,3 +1,4 @@
+github.com/Masterminds/semver/v3 v3.0.3/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/go-chi/chi v1.5.0 h1:2ZcJZozJ+rj6BA0c19ffBUGXEKAT/aOLOtQjD46vBRA=
@@ -12,7 +13,12 @@ github.com/nori-io/common/v3 v3.0.0-20200927040405-7b52cf4c1248 h1:zxmTEQ6Jl7I0t
 github.com/nori-io/common/v3 v3.0.0-20200927040405-7b52cf4c1248/go.mod h1:a/ICgA6b3A3x8HlNDSe9z6HCNiFvuvZJhZP78rzX0ME=
 github.com/nori-io/common/v3 v3.0.0-20201124183231-795113bbd474 h1:x706sUojg1Rv+d35FyBvWr/aCkutGkjX5pir4fAPKxk=
 github.com/nori-io/common/v3 v3.0.0-20201124183231-795113bbd474/go.mod h1:a/ICgA6b3A3x8HlNDSe9z6HCNiFvuvZJhZP78rzX0ME=
+github.com/nori-io/common/v3 v3.0.0-20201201061338-be5c0cbe7d28 h1:7qLHgsyMPYVV5OraboCV34vtt4Fr88DOkPNGZJEb08g=
+github.com/nori-io/common/v3 v3.0.0-20201201061338-be5c0cbe7d28/go.mod h1:a/ICgA6b3A3x8HlNDSe9z6HCNiFvuvZJhZP78rzX0ME=
 github.com/nori-io/common/v3 v3.0.0 h1:5Qa40t9EL1tqD1j8RgK9fOI/ydMqhVoZYZZVGFo64I8=
+github.com/nori-io/interfaces v0.0.0-20201204112810-b8289c6e4a7f h1:KTYQLrD1Ui5PjYvYvX+8lNhHVDpfa/qnR9x3S0JbLO4=
+github.com/nori-io/interfaces/nori/http v0.0.0-20201204112810-b8289c6e4a7f h1:QFgracfnDyTfLhBgmalVRgXLg6xAfV32lRVr6aBGIPs=
+github.com/nori-io/interfaces/nori/http v0.0.0-20201204112810-b8289c6e4a7f/go.mod h1:UFYcaG1Jhnd3HIDUCe0LLQ7hnn9k/W8TBV2ptlCd25U=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

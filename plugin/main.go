@@ -13,7 +13,7 @@ import (
 	"github.com/nori-io/common/v3/pkg/domain/registry"
 	m "github.com/nori-io/common/v3/pkg/meta"
 	"github.com/nori-io/http/internal/server"
-	"github.com/nori-io/http/pkg"
+	"github.com/nori-io/interfaces/nori/http"
 )
 
 var (
@@ -39,7 +39,7 @@ func (p plugin) Meta() meta.Meta {
 		Description:  m.Description{
 			//
 		},
-		Interface: pkg.HttpInterface,
+		Interface: http.HttpInterface,
 		License:   nil,
 		Links:     nil,
 		Repository: m.Repository{
