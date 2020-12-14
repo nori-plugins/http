@@ -3,15 +3,15 @@ package main
 import (
 	"context"
 
-	"github.com/nori-io/common/v3/pkg/domain/event"
+	"github.com/nori-io/common/v4/pkg/domain/event"
 
-	"github.com/nori-io/common/v3/pkg/domain/config"
-	em "github.com/nori-io/common/v3/pkg/domain/enum/meta"
-	"github.com/nori-io/common/v3/pkg/domain/logger"
-	"github.com/nori-io/common/v3/pkg/domain/meta"
-	p "github.com/nori-io/common/v3/pkg/domain/plugin"
-	"github.com/nori-io/common/v3/pkg/domain/registry"
-	m "github.com/nori-io/common/v3/pkg/meta"
+	"github.com/nori-io/common/v4/pkg/domain/config"
+	em "github.com/nori-io/common/v4/pkg/domain/enum/meta"
+	"github.com/nori-io/common/v4/pkg/domain/logger"
+	"github.com/nori-io/common/v4/pkg/domain/meta"
+	p "github.com/nori-io/common/v4/pkg/domain/plugin"
+	"github.com/nori-io/common/v4/pkg/domain/registry"
+	m "github.com/nori-io/common/v4/pkg/meta"
 	"github.com/nori-io/http/internal/server"
 	"github.com/nori-io/interfaces/nori/http"
 )
