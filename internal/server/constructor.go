@@ -6,10 +6,10 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func New(port string) *Server {
+func New(addr string) *Server {
 
 	return &Server{
-		server: &http.Server{Addr: port},
+		server: &http.Server{Addr: addr},
 		router: chi.NewRouter(),
 	}
 }
