@@ -12,7 +12,7 @@ import (
 	p "github.com/nori-io/common/v4/pkg/domain/plugin"
 	"github.com/nori-io/common/v4/pkg/domain/registry"
 	m "github.com/nori-io/common/v4/pkg/meta"
-	"github.com/nori-io/http/internal/server"
+	"github.com/nori-plugins/http/internal/server"
 	"github.com/nori-io/interfaces/nori/http"
 )
 
