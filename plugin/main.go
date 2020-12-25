@@ -29,6 +29,20 @@ type conf struct {
 	port config.String
 }
 
+func (p plugin) Init(ctx context.Context, config config.Config, log logger.FieldLogger) error {
+	p.config = conf{
+		port: config.String("port", "http server port"),
+	}
+
+	p.server = server.New(p.config.port())
+
+	return nil
+}
+
+func (p plugin) Instance() interface{} {
+	return p.server
+}
+
 func (p plugin) Meta() meta.Meta {
 	return m.Meta{
 		ID:     m.ID{},
@@ -48,20 +62,6 @@ func (p plugin) Meta() meta.Meta {
 		},
 		Tags: nil,
 	}
-}
-
-func (p plugin) Instance() interface{} {
-	return p.server
-}
-
-func (p plugin) Init(ctx context.Context, config config.Config, log logger.FieldLogger) error {
-	p.config = conf{
-		port: config.String("port", "http server port"),
-	}
-
-	p.server = server.New(p.config.port())
-
-	return nil
 }
 
 func (p plugin) Start(ctx context.Context, registry registry.Registry) error {
