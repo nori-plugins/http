@@ -12,7 +12,7 @@ import (
 	p "github.com/nori-io/common/v4/pkg/domain/plugin"
 	"github.com/nori-io/common/v4/pkg/domain/registry"
 	m "github.com/nori-io/common/v4/pkg/meta"
-	"github.com/nori-io/http/internal/server"
+	"github.com/nori-plugins/http/internal/server"
 	"github.com/nori-io/interfaces/nori/http"
 )
 
@@ -27,6 +27,20 @@ type plugin struct {
 
 type conf struct {
 	port config.String
+}
+
+func (p plugin) Init(ctx context.Context, config config.Config, log logger.FieldLogger) error {
+	p.config = conf{
+		port: config.String("port", "http server port"),
+	}
+
+	p.server = server.New(p.config.port())
+
+	return nil
+}
+
+func (p plugin) Instance() interface{} {
+	return p.server
 }
 
 func (p plugin) Meta() meta.Meta {
@@ -48,20 +62,6 @@ func (p plugin) Meta() meta.Meta {
 		},
 		Tags: nil,
 	}
-}
-
-func (p plugin) Instance() interface{} {
-	return p.server
-}
-
-func (p plugin) Init(ctx context.Context, config config.Config, log logger.FieldLogger) error {
-	p.config = conf{
-		port: config.String("port", "http server port"),
-	}
-
-	p.server = server.New(p.config.port())
-
-	return nil
 }
 
 func (p plugin) Start(ctx context.Context, registry registry.Registry) error {
