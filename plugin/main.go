@@ -3,22 +3,23 @@ package main
 import (
 	"context"
 
+	p "github.com/nori-io/common/v4/pkg/domain/plugin"
+
 	"github.com/nori-io/common/v4/pkg/domain/event"
 
 	"github.com/nori-io/common/v4/pkg/domain/config"
 	em "github.com/nori-io/common/v4/pkg/domain/enum/meta"
 	"github.com/nori-io/common/v4/pkg/domain/logger"
 	"github.com/nori-io/common/v4/pkg/domain/meta"
-	p "github.com/nori-io/common/v4/pkg/domain/plugin"
 	"github.com/nori-io/common/v4/pkg/domain/registry"
 	m "github.com/nori-io/common/v4/pkg/meta"
-	"github.com/nori-plugins/http/internal/server"
 	"github.com/nori-io/interfaces/nori/http"
+	"github.com/nori-plugins/http/internal/server"
 )
 
-var (
-	Plugin p.Plugin = plugin{}
-)
+func New() p.Plugin {
+	return &plugin{}
+}
 
 type plugin struct {
 	server *server.Server
@@ -86,5 +87,4 @@ func (p plugin) Subscribe(emitter event.EventEmitter) {
 			}
 		}
 	}()
-
 }
