@@ -80,3 +80,10 @@ func (s *Server) Trace(pattern string, h http.HandlerFunc) {
 func (s *Server) Use(middlewares ...func(http.Handler) http.Handler) {
 	s.router.Use(middlewares...)
 }
+
+
+func (s *Server) URLParam(r *http.Request, key string) string {
+	name := chi.URLParam(r, key)
+	return name
+}
+
