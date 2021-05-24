@@ -81,6 +81,9 @@ func (s *Server) Use(middlewares ...func(http.Handler) http.Handler) {
 	s.router.Use(middlewares...)
 }
 
+
 func (s *Server) URLParam(r *http.Request, key string) string {
-	return chi.URLParam(r, key)
+	name := chi.URLParam(r, key)
+	return name
 }
+
