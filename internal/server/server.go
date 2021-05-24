@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 )
 
 type Server struct {
@@ -79,4 +79,8 @@ func (s *Server) Trace(pattern string, h http.HandlerFunc) {
 
 func (s *Server) Use(middlewares ...func(http.Handler) http.Handler) {
 	s.router.Use(middlewares...)
+}
+
+func (s *Server) URLParam(r *http.Request, key string) string {
+	return chi.URLParam(r, key)
 }
