@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	httpInterface "github.com/nori-io/interfaces/nori/http"
 )
 
 type Server struct {
@@ -86,7 +87,7 @@ func (s *Server) URLParam(r *http.Request, key string) string {
 	return name
 }
 
-func (s *Server) Route(pattern string, fn func(h chi.Router)) chi.Router {
+func (s *Server) Route(pattern string, fn func(h httpInterface.Router)) httpInterface.Router {
 	return s.router.Route(pattern, fn)
 }
 func (s *Server) Mount(pattern string, h http.Handler) {
