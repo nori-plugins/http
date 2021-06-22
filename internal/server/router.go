@@ -12,16 +12,6 @@ type Router struct {
 	router chi.Router
 }
 
-func (rt *Router) With(middlewares ...func(http.Handler) http.Handler) httpInterface.Router {
-
-	mux := rt.router.With(middlewares...)
-
-	return &Router{
-		router: mux,
-	}
-
-}
-
 func NewRouter() *Router {
 	return &Router{
 		router: chi.NewRouter(),
@@ -113,4 +103,11 @@ func (rt *Router) NotFound(h http.HandlerFunc) {
 
 func (rt *Router) MethodNotAllowed(h http.HandlerFunc) {
 	rt.router.MethodNotAllowed(h)
+}
+
+func (rt *Router) With(middlewares ...func(http.Handler) http.Handler) httpInterface.Router {
+	mux := rt.router.With(middlewares...)
+	return &Router{
+		router: mux,
+	}
 }
