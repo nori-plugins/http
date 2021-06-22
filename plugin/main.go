@@ -62,7 +62,7 @@ func (p *plugin) Meta() meta.Meta {
 			Title:       "Nori HTTP Interface",
 			Description: "Official implementation of nori/http/HTTP interface",
 		},
-		Interface: http.HttpInterface,
+		Interface: http.RouterInterface,
 		License: []meta.License{m.License{
 			Title: "",
 			Type:  em.Apache2_0,
@@ -80,7 +80,7 @@ func (p *plugin) Meta() meta.Meta {
 func (p *plugin) Start(ctx context.Context, registry registry.Registry) error {
 	addr := fmt.Sprintf("%s:%s", p.config.host(), p.config.port())
 	p.log.Info(fmt.Sprintf("http addr %s", addr))
-	p.server = server.New(addr)
+	p.server = server.NewServer(addr)
 	return nil
 }
 
