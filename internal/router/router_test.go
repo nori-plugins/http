@@ -41,21 +41,30 @@ func testRequest(t *testing.T, ts *httptest.Server, method, path string, body io
 func TestRouter_Use_With(t *testing.T) {
 	router := router.NewRouter()
 
-	router.Use(func(next http.Handler) http.Handler {
+	hArticlesList := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctxValue1 := r.Context().Value("key1").(string)
+		assert.Equal(t, "1", ctxValue1)
+		ctxValue2 := r.Context().Value("key2").(string)
+		assert.Equal(t, "2", ctxValue2)
+
+		w.Write([]byte(ctxValue1))
+	})
+	addKey2 := func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			ctx := context.WithValue(r.Context(), "key1", "1")
+			ctx := r.Context()
+			ctx = context.WithValue(ctx, "key2", "2")
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})
-	})
-	hArticlesList := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ctxValue := r.Context().Value("key1").(string)
-		assert.Equal(t, "1", ctxValue)
-		w.Write([]byte(ctxValue))
-	})
+	}
 
 	router.Route("/articles", func(r http2.Router) {
-		// rr1 = r.(*Mux)
-		r.Get("/", hArticlesList)
+		r.Use(func(next http.Handler) http.Handler {
+			return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				ctx := context.WithValue(r.Context(), "key1", "1")
+				next.ServeHTTP(w, r.WithContext(ctx))
+			})
+		})
+		r.With(addKey2).Get("/", hArticlesList)
 	})
 
 	ts := httptest.NewServer(router)
