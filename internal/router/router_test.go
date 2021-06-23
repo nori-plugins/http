@@ -94,21 +94,20 @@ func TestRouter_Use_With(t *testing.T) {
 		assert.Equal(t, "2subrouter", ctxValue2Subrouter)
 	})
 
-	router.Route("/articles", func(r http2.Router) {
+	router.Route("/profiles", func(r http2.Router) {
 		r.Use(addKey1)
 		r.With(addKey2).Get("/", get)
 		// Subrouters:
-		r.Route("/{articleID}", func(r http2.Router) {
+		r.Route("/{profileID}", func(r http2.Router) {
 			r.Use(addKey1Subrouter)
-			r.With(addKey2Subrouter).Get("/", getSub) // GET /articles/123
+			r.With(addKey2Subrouter).Get("/", getSub) // GET /profiles/1
 		})
 	})
 
 	ts := httptest.NewServer(router)
 	defer ts.Close()
 
-	// Without the fix this test was committed with, this causes a panic.
-	testRequest(t, ts, http.MethodGet, "/articles", nil)
-	testRequest(t, ts, http.MethodGet, "/articles/123", nil)
+	testRequest(t, ts, http.MethodGet, "/profiles", nil)
+	testRequest(t, ts, http.MethodGet, "/profiles/1", nil)
 
 }
