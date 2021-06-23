@@ -85,7 +85,7 @@ func (rt *Router) URLParam(r *http.Request, key string) string {
 
 func (rt *Router) Route(pattern string, fn func(r httpInterface.Router)) httpInterface.Router {
 	if fn == nil {
-		panic(fmt.Sprintf("chi: attempting to Route() a nil subrouter on '%rt'", pattern))
+		panic(fmt.Sprintf("attempting to Route() a nil subrouter on '%s'", pattern))
 	}
 	subRouter := Router{router: chi.NewRouter()}
 	fn(&subRouter)
