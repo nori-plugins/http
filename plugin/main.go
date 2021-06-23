@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/nori-plugins/http/internal/router"
+
 	"github.com/nori-io/common/v5/pkg/domain/config"
 	em "github.com/nori-io/common/v5/pkg/domain/enum/meta"
 	"github.com/nori-io/common/v5/pkg/domain/event"
@@ -78,7 +80,8 @@ func (p *plugin) Meta() meta.Meta {
 func (p *plugin) Start(ctx context.Context, registry registry.Registry) error {
 	addr := fmt.Sprintf("%s:%s", p.config.host(), p.config.port())
 	p.log.Info(fmt.Sprintf("http addr %s", addr))
-	p.server = server.NewServer(addr)
+	router := router.NewRouter()
+	p.server = server.NewServer(addr, router)
 	return nil
 }
 

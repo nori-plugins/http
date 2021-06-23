@@ -6,9 +6,9 @@ import (
 	"github.com/nori-plugins/http/internal/router"
 )
 
-func NewServer(addr string) *Server {
+func NewServer(addr string, rout *router.Router) *Server {
 	return &Server{
 		server: &http.Server{Addr: addr},
-		router: router.NewRouter(),
+		router: rout,
 	}
 }
