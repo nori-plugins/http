@@ -77,12 +77,17 @@ func TestRouter_Use_With(t *testing.T) {
 		assert.Equal(t, "1", ctxValue1)
 		ctxValue2 := r.Context().Value("key2").(string)
 		assert.Equal(t, "2", ctxValue2)
-
+		ctxValue1Subrouter := r.Context().Value("key1subrouter")
+		assert.Nil(t, ctxValue1Subrouter)
+		ctxValue2Subrouter := r.Context().Value("key2subrouter")
+		assert.Nil(t, ctxValue2Subrouter)
 		w.Write([]byte(ctxValue1))
 	})
 	getSub := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctxValue1 := r.Context().Value("key1").(string)
 		assert.Equal(t, "1", ctxValue1)
+		ctxValue2 := r.Context().Value("key2")
+		assert.Nil(t, ctxValue2)
 		ctxValue1Subrouter := r.Context().Value("key1subrouter").(string)
 		assert.Equal(t, "1subrouter", ctxValue1Subrouter)
 		ctxValue2Subrouter := r.Context().Value("key2subrouter").(string)
@@ -104,6 +109,6 @@ func TestRouter_Use_With(t *testing.T) {
 
 	// Without the fix this test was committed with, this causes a panic.
 	testRequest(t, ts, http.MethodGet, "/articles", nil)
-	testRequest(t, ts, http.MethodGet, "/articles/1", nil)
+	testRequest(t, ts, http.MethodGet, "/articles/123", nil)
 
 }
