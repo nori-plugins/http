@@ -41,14 +41,13 @@ func testRequest(t *testing.T, ts *httptest.Server, method, path string, body io
 func TestRouter_Use_With(t *testing.T) {
 	router := router.NewRouter()
 
-	hArticlesList := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ctxValue1 := r.Context().Value("key1").(string)
-		assert.Equal(t, "1", ctxValue1)
-		ctxValue2 := r.Context().Value("key2").(string)
-		assert.Equal(t, "2", ctxValue2)
-
-		w.Write([]byte(ctxValue1))
-	})
+	addKey1 := func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			ctx := r.Context()
+			ctx = context.WithValue(ctx, "key1", "1")
+			next.ServeHTTP(w, r.WithContext(ctx))
+		})
+	}
 	addKey2 := func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			ctx := r.Context()
@@ -57,14 +56,47 @@ func TestRouter_Use_With(t *testing.T) {
 		})
 	}
 
-	router.Route("/articles", func(r http2.Router) {
-		r.Use(func(next http.Handler) http.Handler {
-			return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-				ctx := context.WithValue(r.Context(), "key1", "1")
-				next.ServeHTTP(w, r.WithContext(ctx))
-			})
+	addKey1Subrouter := func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			ctx := r.Context()
+			ctx = context.WithValue(ctx, "key1subrouter", "1subrouter")
+			next.ServeHTTP(w, r.WithContext(ctx))
 		})
-		r.With(addKey2).Get("/", hArticlesList)
+	}
+
+	addKey2Subrouter := func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			ctx := r.Context()
+			ctx = context.WithValue(ctx, "key2subrouter", "2subrouter")
+			next.ServeHTTP(w, r.WithContext(ctx))
+		})
+	}
+
+	get := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctxValue1 := r.Context().Value("key1").(string)
+		assert.Equal(t, "1", ctxValue1)
+		ctxValue2 := r.Context().Value("key2").(string)
+		assert.Equal(t, "2", ctxValue2)
+
+		w.Write([]byte(ctxValue1))
+	})
+	getSub := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctxValue1 := r.Context().Value("key1").(string)
+		assert.Equal(t, "1", ctxValue1)
+		ctxValue1Subrouter := r.Context().Value("key1subrouter").(string)
+		assert.Equal(t, "1subrouter", ctxValue1Subrouter)
+		ctxValue2Subrouter := r.Context().Value("key2subrouter").(string)
+		assert.Equal(t, "2subrouter", ctxValue2Subrouter)
+	})
+
+	router.Route("/articles", func(r http2.Router) {
+		r.Use(addKey1)
+		r.With(addKey2).Get("/", get)
+		// Subrouters:
+		r.Route("/{articleID}", func(r http2.Router) {
+			r.Use(addKey1Subrouter)
+			r.With(addKey2Subrouter).Get("/", getSub) // GET /articles/123
+		})
 	})
 
 	ts := httptest.NewServer(router)
@@ -72,5 +104,6 @@ func TestRouter_Use_With(t *testing.T) {
 
 	// Without the fix this test was committed with, this causes a panic.
 	testRequest(t, ts, http.MethodGet, "/articles", nil)
+	testRequest(t, ts, http.MethodGet, "/articles/1", nil)
 
 }
