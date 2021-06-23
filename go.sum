@@ -6,10 +6,8 @@ github.com/go-chi/chi/v5 v5.0.3/go.mod h1:DslCQbL2OYiznFReuXYUmQ2hGd1aDpCnlMNITL
 github.com/golang/mock v1.5.0/go.mod h1:CWnOUgYIOo4TcNZ0wHX3YZCqsaM1I1Jvs6v3mP3KVu8=
 github.com/nori-io/common/v5 v5.0.0 h1:aDBY1YBJV+wD7AE17UeYMYJhaQsqvfaQAgbw1XzmY5A=
 github.com/nori-io/common/v5 v5.0.0/go.mod h1:DWik4lJlGAPoOOhrYtGlL1KVSUWw0wATIWt2UbfvV4Y=
-github.com/nori-io/interfaces/nori/http v1.0.1-0.20210622065927-b6e499c69b4b h1:4uClA7NIqbizpTvLe10zQhn7giRwS0dUHoFWWYBe0vM=
-github.com/nori-io/interfaces/nori/http v1.0.1-0.20210622065927-b6e499c69b4b/go.mod h1:1vmp7IYd4YO93AC+rTaMnnMhH0/if34bFXPl/ZBfoK8=
-github.com/nori-io/interfaces/nori/http v1.0.1-0.20210622071626-f87408362907 h1:XXCaoGezn9h6D/vNUTvbHYeQkY/B6HknyXS/3cbLUU8=
-github.com/nori-io/interfaces/nori/http v1.0.1-0.20210622071626-f87408362907/go.mod h1:1vmp7IYd4YO93AC+rTaMnnMhH0/if34bFXPl/ZBfoK8=
+github.com/nori-io/interfaces/nori/http/v2 v2.0.1 h1:gLtBc5BXPQgULAmYbVNYyMTGDALeDuqSW5vr7OVWj8I=
+github.com/nori-io/interfaces/nori/http/v2 v2.0.1/go.mod h1:xvYLTthJNzu9oOGXJHDlVyqmKy9bO52Tgi4h0ACDMvU=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
