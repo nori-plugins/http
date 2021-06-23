@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	httpInterface "github.com/nori-io/interfaces/nori/http"
+	nori_http "github.com/nori-io/interfaces/nori/http/v2"
 )
 
 type Router struct {
@@ -83,7 +83,7 @@ func (rt *Router) URLParam(r *http.Request, key string) string {
 	return name
 }
 
-func (rt *Router) Route(pattern string, fn func(r httpInterface.Router)) httpInterface.Router {
+func (rt *Router) Route(pattern string, fn func(r nori_http.Router)) nori_http.Router {
 	if fn == nil {
 		panic(fmt.Sprintf("chi: attempting to Route() a nil subrouter on '%rt'", pattern))
 	}
@@ -105,7 +105,7 @@ func (rt *Router) MethodNotAllowed(h http.HandlerFunc) {
 	rt.router.MethodNotAllowed(h)
 }
 
-func (rt *Router) With(middlewares ...func(http.Handler) http.Handler) httpInterface.Router {
+func (rt *Router) With(middlewares ...func(http.Handler) http.Handler) nori_http.Router {
 	mux := rt.router.With(middlewares...)
 	return &Router{
 		router: mux,
