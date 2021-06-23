@@ -1,4 +1,4 @@
-package server
+package router
 
 import (
 	"fmt"
@@ -10,12 +10,6 @@ import (
 
 type Router struct {
 	router chi.Router
-}
-
-func NewRouter() *Router {
-	return &Router{
-		router: chi.NewRouter(),
-	}
 }
 
 func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {

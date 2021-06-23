@@ -3,10 +3,12 @@ package server
 import (
 	"context"
 	"net/http"
+
+	router2 "github.com/nori-plugins/http/internal/router"
 )
 
 type Server struct {
-	router *Router
+	router *router2.Router
 	server *http.Server
 }
 
