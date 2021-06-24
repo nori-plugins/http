@@ -44,6 +44,10 @@ func (p *plugin) Init(ctx context.Context, config config.Config, log logger.Fiel
 }
 
 func (p *plugin) Instance() interface{} {
+	return p.getInstance()
+}
+
+func (p *plugin) getInstance() http.Router {
 	return p.server.Router()
 }
 
