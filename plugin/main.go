@@ -44,7 +44,7 @@ func (p *plugin) Init(ctx context.Context, config config.Config, log logger.Fiel
 }
 
 func (p *plugin) Instance() interface{} {
-	return p.server
+	return p.server.Router()
 }
 
 func (p *plugin) Meta() meta.Meta {
