@@ -3,13 +3,12 @@ package server
 import (
 	"net/http"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/nori-plugins/http/internal/router"
 )
 
-func New(addr string) *Server {
-
+func NewServer(addr string, rout *router.Router) *Server {
 	return &Server{
 		server: &http.Server{Addr: addr},
-		router: chi.NewRouter(),
+		router: rout,
 	}
 }

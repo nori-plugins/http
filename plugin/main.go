@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/nori-plugins/http/internal/router"
+
 	"github.com/nori-io/common/v5/pkg/domain/config"
 	em "github.com/nori-io/common/v5/pkg/domain/enum/meta"
 	"github.com/nori-io/common/v5/pkg/domain/event"
@@ -12,9 +14,7 @@ import (
 	p "github.com/nori-io/common/v5/pkg/domain/plugin"
 	"github.com/nori-io/common/v5/pkg/domain/registry"
 	m "github.com/nori-io/common/v5/pkg/meta"
-
-	"github.com/nori-io/interfaces/nori/http"
-
+	"github.com/nori-io/interfaces/nori/http/v2"
 	"github.com/nori-plugins/http/internal/server"
 )
 
@@ -44,7 +44,11 @@ func (p *plugin) Init(ctx context.Context, config config.Config, log logger.Fiel
 }
 
 func (p *plugin) Instance() interface{} {
-	return p.server
+	return p.getInstance()
+}
+
+func (p *plugin) getInstance() http.Router {
+	return p.server.Router()
 }
 
 func (p *plugin) Meta() meta.Meta {
@@ -62,7 +66,7 @@ func (p *plugin) Meta() meta.Meta {
 			Title:       "Nori HTTP Interface",
 			Description: "Official implementation of nori/http/HTTP interface",
 		},
-		Interface: http.HttpInterface,
+		Interface: http.RouterInterface,
 		License: []meta.License{m.License{
 			Title: "",
 			Type:  em.Apache2_0,
@@ -80,7 +84,8 @@ func (p *plugin) Meta() meta.Meta {
 func (p *plugin) Start(ctx context.Context, registry registry.Registry) error {
 	addr := fmt.Sprintf("%s:%s", p.config.host(), p.config.port())
 	p.log.Info(fmt.Sprintf("http addr %s", addr))
-	p.server = server.New(addr)
+	router := router.NewRouter()
+	p.server = server.NewServer(addr, router)
 	return nil
 }
 
