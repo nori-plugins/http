@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/nori-plugins/http/internal/router"
@@ -34,24 +35,31 @@ type conf struct {
 }
 
 func (p *plugin) Init(ctx context.Context, config config.Config, log logger.FieldLogger) error {
+	p.log = log
 	p.config = conf{
 		host: config.String("host", "http server host"),
 		port: config.String("port", "http server port"),
 	}
-	p.log = log
 
 	return nil
 }
 
 func (p *plugin) Instance() interface{} {
+	if p.getInstance() == nil {
+		p.log.Error("p.getInstance() is nil")
+	}
 	return p.getInstance()
 }
 
 func (p *plugin) getInstance() http.Router {
+	if p.server.Router() == nil {
+		p.log.Error("p.server.Router() is nil")
+	}
 	return p.server.Router()
 }
 
 func (p *plugin) Meta() meta.Meta {
+
 	return m.Meta{
 		ID: m.ID{
 			ID:      meta.PluginID("nori/http/HTTP"),
@@ -82,9 +90,13 @@ func (p *plugin) Meta() meta.Meta {
 }
 
 func (p *plugin) Start(ctx context.Context, registry registry.Registry) error {
+
 	addr := fmt.Sprintf("%s:%s", p.config.host(), p.config.port())
 	p.log.Info(fmt.Sprintf("http addr %s", addr))
 	router := router.NewRouter()
+	if router == nil {
+		return errors.New("pointer of router is nil")
+	}
 	p.server = server.NewServer(addr, router)
 	return nil
 }
@@ -94,6 +106,7 @@ func (p *plugin) Stop(ctx context.Context, registry registry.Registry) error {
 }
 
 func (p *plugin) Subscribe(emitter event.EventEmitter) {
+
 	ch1, _ := emitter.On("/nori/plugins/started")
 
 	go func() {
@@ -107,4 +120,5 @@ func (p *plugin) Subscribe(emitter event.EventEmitter) {
 			}
 		}
 	}()
+
 }
